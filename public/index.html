@@ -1,15 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title>the-weather</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui" />
+    
+        <!-- HTML Meta Tags -->
+    <title>Weather ⛅</title>
+    <meta name="description" content="Weather forecast for your city !" />
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
+    <!-- Google / Search Engine Tags -->
+    <meta itemprop="name" content="Weather ⛅" />
+    <meta itemprop="description" content="Weather forecast for your city !" />
+    <meta itemprop="image" content="" />
+
+    <!-- Facebook Meta Tags -->
+    <meta property="og:url" content="/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Weather ⛅" />
+    <meta property="og:description" content="Weather forecast for any city !" />
+    <meta property="og:image" content="" />
+
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Weather ⛅" />
+    <meta name="twitter:description" content="Weather forecast for any city !" />
+    <meta name="twitter:image" content="" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900&display=swap" rel="stylesheet" />
+   
+       <!-- CSS Vendor -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css" />
   </head>
   <body>
+    <style>
+      .lato {
+        font-family: "Lato", sans-serif;
+      }
+      header {
+        max-height: 48px;
+      }
+    </style>
     <noscript>
-      <strong>We're sorry but the-weather doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+      <strong>Please enable javascript to continue.</strong>
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->

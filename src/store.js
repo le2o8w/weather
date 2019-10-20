@@ -4,7 +4,15 @@ import Vuex from "vuex";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {},
-  mutations: {},
-  actions: {}
+  state: {
+    favourites: []
+  },
+  mutations: {
+    changeFavourites(state, payload) {
+      state.favourites = payload;
+    }
+  },
+  getters: {
+    favourites: state => state.favourites
+  }
 });
