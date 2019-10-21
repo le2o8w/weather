@@ -5,7 +5,7 @@
     </v-container>
     <v-container class="fill-height d-flex flex-column" fluid v-else>
       <WeatherArticle :result="result" />
-      <WeatherHourly :result="result" />
+      <WeatherHourly class="d-none d-sm-flex" :result="result" />
       <v-card class="my-8 mx-auto" width="90%">
         <v-container>
           <v-card-title>

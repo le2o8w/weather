@@ -3,7 +3,7 @@
     <v-btn icon v-if="isFavorited" @click.prevent="unFavorite()">
       <v-icon>mdi-heart</v-icon>
     </v-btn>
-    <v-btn icon color="primary" v-else @click.prevent="favorite()">
+    <v-btn icon v-else @click.prevent="favorite()">
       <v-icon>mdi-heart-outline</v-icon>
     </v-btn>
   </span>

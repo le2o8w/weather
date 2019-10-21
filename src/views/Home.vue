@@ -12,16 +12,17 @@
               contain
             ></v-img>
             <h1 class="mt-4 mb-12 body-1 primary--text">
-              Look up the weather in any city :
+              Trouvez les prévisions météo de votre ville :
             </h1>
 
             <v-text-field
               class="subtitle-1 "
-              label="Search"
+              label="Recherche..."
               outlined
               v-model="city"
               @keyup.enter="goToCity(city)"
             ></v-text-field>
+            <p class="primary--text font-weight-bold">ou</p>
             <v-btn
               class="subtitle-1"
               color="cyan"
@@ -29,7 +30,7 @@
               @click="locateMe"
               :loading="gettingLocation"
             >
-              <v-icon left>mdi-crosshairs-gps</v-icon> Find me
+              Géolocalisation <v-icon right>mdi-crosshairs-gps</v-icon>
             </v-btn>
 
             <div v-if="error">

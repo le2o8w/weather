@@ -19,7 +19,7 @@
         single-line
         v-if="showSearch"
         v-model="searchText"
-        label="Search"
+        label="Recherche..."
         transition="slide-x-transition"
         @keyup.enter="newSearch(searchText)"
         autofocus
