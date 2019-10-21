@@ -1,7 +1,7 @@
 <template>
   <v-content min-height="100vh">
     <v-container>
-      <v-row>
+      <v-row v-if="favourites.length > 0">
         <v-col
           cols="12"
           sm="6"
@@ -12,16 +12,23 @@
           <FavouriteCard :info="favourite" @updated-favourites="update" />
         </v-col>
       </v-row>
+      <v-row v-else>
+        <v-col cols="12">
+          <FavouriteEmpty />
+        </v-col>
+      </v-row>
     </v-container>
   </v-content>
 </template>
 <script>
 import FavouriteCard from "@/components/FavouriteCard.vue";
+import FavouriteEmpty from "@/components/FavouriteEmpty.vue";
 
 export default {
   name: "Favourites",
   components: {
-    FavouriteCard
+    FavouriteCard,
+    FavouriteEmpty
   },
   data() {
     return {

@@ -1,5 +1,5 @@
 <template>
-  <v-app style="font-family: 'Lato', sans-serif;">
+  <v-app>
     <v-toolbar dense>
       <v-toolbar-title>
         <router-link to="/">
@@ -35,12 +35,16 @@
     <router-view></router-view>
     <v-footer>
       <v-col class="text-center" cols="12">
-        <a href="https://darksky.net/poweredby/" target="_blank" class="link">
-          Powered by Dark Sky
+        <a
+          href="https://darksky.net/poweredby/"
+          target="_blank"
+          class="link cyan--text"
+        >
+          Powered by Dark Sky ☔️
         </a>
         –
-        <a href="https://unsplash.com/" target="_blank" class="link">
-          Unsplash
+        <a href="https://unsplash.com/" target="_blank" class="link cyan--text">
+          Unsplash 📸
         </a>
       </v-col>
     </v-footer>

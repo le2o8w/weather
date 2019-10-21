@@ -9,7 +9,7 @@
       cover
     >
       <v-card-title class="d-flex justify-space-between align-center">
-        <a href="#" class="link white--text lato" @click.prevent="navigate">
+        <a href="#" class="link white--text" @click.prevent="navigate">
           {{ info.city | capitalizeFirst }}
         </a>
         <Favourite :favourite="info" @update="updateFavourites" />
@@ -23,7 +23,7 @@
               :alt="'Weather icon for' + info.city"
             ></v-img>
           </v-lazy>
-          <h5 class="lato display-1">{{ temperature | round }} °</h5>
+          <h5 class="display-1">{{ temperature | round }} °</h5>
         </div>
       </v-card-text>
     </v-img>
@@ -53,12 +53,14 @@ export default {
   },
   methods: {
     async weather() {
-      try {
-        const weather = await getWeather(this.info.coordinates);
-        this.icon = require(`@/assets/icons/${weather.currently.icon}.png`);
-        this.temperature = weather.currently.temperature;
-      } catch (error) {
-        console.log(error);
+      if (this.info) {
+        try {
+          const weather = await getWeather(this.info.coordinates);
+          this.icon = require(`@/assets/icons/${weather.currently.icon}.png`);
+          this.temperature = weather.currently.temperature;
+        } catch (error) {
+          console.log(error);
+        }
       }
     },
     updateFavourites(favourites) {

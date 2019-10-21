@@ -12,12 +12,12 @@
               contain
             ></v-img>
             <h1 class="mt-4 mb-12 body-1 primary--text">
-              Trouvez les prévisions météo de votre ville :
+              Prévisions météo du monde entier :
             </h1>
 
             <v-text-field
               class="subtitle-1 "
-              label="Recherche..."
+              label="Rechercher une ville"
               outlined
               v-model="city"
               @keyup.enter="goToCity(city)"

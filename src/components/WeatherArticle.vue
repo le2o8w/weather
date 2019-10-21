@@ -29,7 +29,7 @@
           <v-container>
             <v-row>
               <v-col cols="12" sm="6">
-                <h3 class="lato my-3">
+                <h3 class="my-3">
                   {{ result.localDay | capitalizeFirst }}
                 </h3>
                 <p class="">
