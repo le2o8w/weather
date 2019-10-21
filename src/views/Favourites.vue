@@ -1,48 +1,19 @@
 <template>
-  <v-app>
-    <v-toolbar dense>
-      <v-toolbar-title
-        ><router-link to="/" class="link white--text "
-          >Weather</router-link
-        ></v-toolbar-title
-      >
-      <div class="flex-grow-1" v-if="!showSearch"></div>
-
-      <v-text-field
-        class="ps-8"
-        hide-details
-        single-line
-        v-if="showSearch"
-        v-model="search"
-        label="Search"
-        transition="slide-x-transition"
-        @keyup.enter="newSearch(search)"
-        autofocus
-      ></v-text-field>
-      <v-btn icon @click="showSearch = !showSearch">
-        <v-icon>mdi-magnify</v-icon>
-      </v-btn>
-
-      <v-btn icon color="primary">
-        <v-icon>mdi-heart</v-icon>
-      </v-btn>
-    </v-toolbar>
-    <v-content min-height="100vh">
-      <v-container>
-        <v-row>
-          <v-col
-            cols="12"
-            sm="6"
-            md="3"
-            v-for="(favourite, index) in favourites"
-            :key="index"
-          >
-            <FavouriteCard :info="favourite" @updated-favourites="update" />
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-content>
-  </v-app>
+  <v-content min-height="100vh">
+    <v-container>
+      <v-row>
+        <v-col
+          cols="12"
+          sm="6"
+          md="3"
+          v-for="(favourite, index) in favourites"
+          :key="index"
+        >
+          <FavouriteCard :info="favourite" @updated-favourites="update" />
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-content>
 </template>
 <script>
 import FavouriteCard from "@/components/FavouriteCard.vue";

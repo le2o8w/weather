@@ -1,58 +1,29 @@
 <template>
   <v-content>
-    <v-app style="font-family: 'Lato', sans-serif;">
-      <v-toolbar dense>
-        <v-toolbar-title>
-          <router-link to="/" class="link white--text">Weather</router-link>
-        </v-toolbar-title>
-        <div class="flex-grow-1" v-if="!showSearch"></div>
-        <v-text-field
-          class="ps-8"
-          hide-details
-          single-line
-          v-if="showSearch"
-          v-model="searchText"
-          label="Search"
-          transition="slide-x-transition"
-          @keyup.enter="newSearch(searchText)"
-          autofocus
-        ></v-text-field>
-        <v-btn icon @click="showSearch = !showSearch">
-          <v-icon>mdi-magnify</v-icon>
-        </v-btn>
-
-        <v-btn icon to="/favourites">
-          <v-icon>mdi-heart</v-icon>
-        </v-btn>
-      </v-toolbar>
-
-      <v-content>
-        <v-container class="fill-height" fluid v-if="pending">
-          <Loader />
+    <v-container class="fill-height" fluid v-if="pending">
+      <Loader />
+    </v-container>
+    <v-container class="fill-height d-flex flex-column" fluid v-else>
+      <WeatherArticle :result="result" />
+      <WeatherHourly :result="result" />
+      <v-card class="my-8 mx-auto" width="90%">
+        <v-container>
+          <v-card-title>
+            <h4>Semaine à venir</h4>
+          </v-card-title>
+          <v-sheet>
+            <v-slide-group multiple show-arrows>
+              <v-slide-item
+                v-for="(day, index) in result.weeklyWeather"
+                :key="index"
+              >
+                <WeatherDaily :result="day" />
+              </v-slide-item>
+            </v-slide-group>
+          </v-sheet>
         </v-container>
-        <v-container class="fill-height d-flex flex-column" fluid v-else>
-          <WeatherArticle :result="result" />
-          <WeatherHourly :result="result" />
-          <v-card class="my-8 mx-auto" width="90%">
-            <v-container>
-              <v-card-title>
-                <h4>Semaine à venir</h4>
-              </v-card-title>
-              <v-sheet>
-                <v-slide-group multiple show-arrows>
-                  <v-slide-item
-                    v-for="(day, index) in result.weeklyWeather"
-                    :key="index"
-                  >
-                    <WeatherDaily :result="day" />
-                  </v-slide-item>
-                </v-slide-group>
-              </v-sheet>
-            </v-container>
-          </v-card>
-        </v-container>
-      </v-content>
-    </v-app>
+      </v-card>
+    </v-container>
   </v-content>
 </template>
 
@@ -76,8 +47,6 @@ export default {
   data() {
     return {
       pending: true,
-      searchText: "",
-      showSearch: false,
       result: {}
     };
   },
@@ -146,10 +115,7 @@ export default {
 
       this.pending = false;
     },
-    newSearch(city) {
-      this.$router.push({ name: "results", params: { city: city } });
-      this.searchText = "";
-    },
+
     localDate(day, timezone) {
       let language;
       if (navigator.languages != undefined) {

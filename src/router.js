@@ -11,18 +11,25 @@ export default new Router({
   routes: [
     {
       path: "/",
-      name: "welcome",
-      component: lazyLoad("Welcome")
+      name: "home",
+      component: lazyLoad("Home")
     },
     {
-      path: "/weather/:city",
-      name: "results",
-      component: lazyLoad("Results")
-    },
-    {
-      path: "/favourites",
-      name: "favourites",
-      component: lazyLoad("Favourites")
+      path: "",
+      name: "layout",
+      component: lazyLoad("Layout"),
+      children: [
+        {
+          path: "/weather/:city",
+          name: "results",
+          component: lazyLoad("Results")
+        },
+        {
+          path: "/favourites",
+          name: "favourites",
+          component: lazyLoad("Favourites")
+        }
+      ]
     }
   ]
 });
