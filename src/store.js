@@ -15,8 +15,11 @@ export default new Vuex.Store({
       state.favourites.push(payload);
     },
     remove(state, payload) {
-      const index = state.favourites.map(favourite => 
-     {return favourite.city;}).indexOf(payload.city);
+      const index = state.favourites
+        .map(favourite => {
+          return favourite.city;
+        })
+        .indexOf(payload.city);
       state.favourites.splice(index, 1);
     }
   },
@@ -31,7 +34,6 @@ export default new Vuex.Store({
     },
     addFavourite(context, favourite) {
       context.commit("add", favourite);
-
     },
     removeFavourite(context, favourite) {
       context.commit("remove", favourite);
@@ -39,7 +41,6 @@ export default new Vuex.Store({
     saveFavourites(context, favourites) {
       localStorage.setItem("favourites", JSON.stringify(favourites));
       context.commit("setFavourites", favourites);
-
     }
   }
 });
