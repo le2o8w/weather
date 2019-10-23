@@ -3,29 +3,41 @@
     <v-app class="welcome" style="background-size:cover !important;">
       <v-content>
         <v-container class="fill-height" fluid>
+          <div class="favourites ma-3">
+            <v-btn icon to="/favourites" fab x-large>
+              <v-icon x-large class="favourites--icon" color="pink"
+                >mdi-heart</v-icon
+              >
+            </v-btn>
+          </div>
           <div class="welcome__container">
             <v-img
               src="../../public/img/logo-home.png"
               alt="Weather"
-              max-width="60%"
+              max-width="70%"
               class="mx-auto"
               contain
             ></v-img>
-            <h1 class="mt-4 mb-12 body-1 primary--text">
-              Prévisions météo du monde entier :
+            <h1 class="mt-4 mb-12 title primary--text">
+              Prévisions météo du monde entier
             </h1>
 
             <v-text-field
-              class="subtitle-1 "
+              class="input"
               label="Rechercher une ville"
-              outlined
+              light
+              single-line
+              solo
+              append-icon="mdi-magnify"
+              color="primary"
               v-model="city"
               @keyup.enter="goToCity(city)"
             ></v-text-field>
             <p class="primary--text font-weight-bold">ou</p>
             <v-btn
-              class="subtitle-1"
-              color="cyan"
+              class="subtitle-1 pb-2 text-capitalize"
+              large
+              color="#85c6b4"
               elevation="1"
               @click="locateMe"
               :loading="gettingLocation"
@@ -33,8 +45,8 @@
               Géolocalisation <v-icon right>mdi-crosshairs-gps</v-icon>
             </v-btn>
 
-            <div v-if="error">
-              Sorry, but the navigator won't allow us to access your location.
+            <div class="py-5" v-if="error">
+              Désolé, le navigateur n'autorise pas l'accès à votre position.
             </div>
           </div>
         </v-container>
@@ -101,9 +113,12 @@ export default {
   }
 };
 </script>
-<style>
+<style scoped>
+html {
+  overflow-y: scroll;
+}
 .welcome {
-  background: 50% 50% url("../../public/img/background/landscape.jpg")
+  background: 50% url("../../public/img/background/landscape.jpg")
     rgba(0, 0, 0, 0) no-repeat !important;
 }
 
@@ -112,10 +127,28 @@ export default {
   margin: 0 auto;
   text-align: center;
 }
-
-@media screen and (max-width: 600px) {
+.favourites {
+  position: fixed;
+  top: 0;
+  right: 0;
+}
+.favourites--icon {
+  animation: 1.8s ease 0s infinite beat;
+}
+@media screen and (max-width: 900px) {
   .welcome__container {
     width: 95%;
+  }
+}
+@keyframes beat {
+  0%,
+  50%,
+  100% {
+    transform: scale(1.1, 1.12);
+  }
+  30%,
+  80% {
+    transform: scale(0.92, 0.95);
   }
 }
 </style>

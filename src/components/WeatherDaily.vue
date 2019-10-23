@@ -1,7 +1,8 @@
 <template>
   <v-card v-if="result" class="daily my-5 mx-3 pa-3" elevation="5">
     <v-card-text class=" d-flex flex-column align-center justif-center">
-      <h3 class="'mb-1 size-3">{{ result.localDay }}</h3>
+      <h3 class="size-3">{{ result.localDayNb }}</h3>
+      <h3 class="mb-1 size-3">{{ result.localDay }}</h3>
       <v-img
         class="weather__icon"
         :src="require(`@/assets/icons/${result.icon}.png`)"

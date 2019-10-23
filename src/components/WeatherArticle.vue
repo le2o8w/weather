@@ -12,7 +12,7 @@
         cover
       >
         <v-card-title>
-          <v-container class="d-flex justify-space-between align-center">
+          <v-container class="d-flex justify-space-between align-start">
             <h2>
               <span
                 v-for="(details, index) in result.country"
@@ -22,7 +22,7 @@
                 {{ details }}
               </span>
             </h2>
-            <Favourite :favourite="result" />
+            <Favourite :favourite="result.favourite" />
           </v-container>
         </v-card-title>
         <v-card-text>

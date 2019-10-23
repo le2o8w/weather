@@ -6,7 +6,7 @@
           <v-img
             src="../../public/img/logo.png"
             height="38px"
-            max-width="150px"
+            max-width="100px"
             contain
           >
           </v-img>
@@ -14,7 +14,7 @@
       </v-toolbar-title>
       <div class="flex-grow-1" v-if="!showSearch"></div>
       <v-text-field
-        class="ps-8"
+        class="pr-4 pl-8"
         hide-details
         single-line
         v-if="showSearch"
@@ -23,6 +23,7 @@
         transition="slide-x-transition"
         @keyup.enter="newSearch(searchText)"
         autofocus
+        color="#85c6b4"
       ></v-text-field>
       <v-btn icon @click="showSearch = !showSearch">
         <v-icon>mdi-magnify</v-icon>
@@ -32,18 +33,26 @@
         <v-icon>mdi-heart</v-icon>
       </v-btn>
     </v-toolbar>
-    <router-view></router-view>
+    <v-container class="fill-height">
+      <router-view></router-view>
+    </v-container>
     <v-footer>
       <v-col class="text-center" cols="12">
         <a
           href="https://darksky.net/poweredby/"
+          class="link"
           target="_blank"
-          class="link cyan--text"
+          rel="noreferrer"
         >
           Powered by Dark Sky ☔️
         </a>
         –
-        <a href="https://unsplash.com/" target="_blank" class="link cyan--text">
+        <a
+          href="https://unsplash.com/"
+          class="link"
+          target="_blank"
+          rel="noreferrer"
+        >
           Unsplash 📸
         </a>
       </v-col>
@@ -69,3 +78,8 @@ export default {
   }
 };
 </script>
+<style scoped>
+.link {
+  color: #85c6b4;
+}
+</style>

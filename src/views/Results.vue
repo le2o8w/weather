@@ -8,18 +8,26 @@
       <WeatherHourly class="d-none d-sm-flex" :result="result" />
       <v-card class="my-8 mx-auto" width="90%">
         <v-container>
-          <v-card-title>
-            <h4>Semaine à venir</h4>
+          <v-card-title class="d-flex align-start flex-column">
+            <div class="font-weight-bold">Cette semaine</div>
+            <div class="summary">{{ result.weeklyWeatherSummary }}</div>
           </v-card-title>
           <v-sheet>
-            <v-slide-group multiple show-arrows>
+            <v-slide-group show-arrows>
               <v-slide-item
                 v-for="(day, index) in result.weeklyWeather"
                 :key="index"
               >
-                <WeatherDaily :result="day" />
+                <div @click="showDaily(day)">
+                  <WeatherDaily :result="day" />
+                </div>
               </v-slide-item>
             </v-slide-group>
+            <v-expand-transition>
+              <v-sheet v-if="selected" tile class="mx-auto" width="90%">
+                <WeatherDailyMore :day="selectedDay" />
+              </v-sheet>
+            </v-expand-transition>
           </v-sheet>
         </v-container>
       </v-card>
@@ -35,6 +43,8 @@ import moment from "moment-timezone";
 import WeatherArticle from "@/components/WeatherArticle.vue";
 import WeatherHourly from "@/components/WeatherHourly.vue";
 import WeatherDaily from "@/components/WeatherDaily.vue";
+import WeatherDailyMore from "@/components/WeatherDailyMore.vue";
+
 import Loader from "@/components/Loader.vue";
 export default {
   name: "Results",
@@ -42,10 +52,13 @@ export default {
     WeatherArticle,
     WeatherHourly,
     WeatherDaily,
+    WeatherDailyMore,
     Loader
   },
   data() {
     return {
+      selected: false,
+      selectedDay: null,
       pending: true,
       result: {}
     };
@@ -71,6 +84,7 @@ export default {
         const weather = await getWeather(this.result.coordinates);
         this.result.currentWeather = weather.currently;
         this.result.hourlyWeather = weather.hourly.data;
+        this.result.hourlyWeatherSummary = weather.hourly.summary;
         this.result.hourlyTemperatures = [];
         this.result.hourlyLabels = [];
         this.result.hourlyWeather.forEach(hour => {
@@ -100,15 +114,31 @@ export default {
           weather.currently.time,
           weather.timezone
         );
+        this.result.weeklyWeatherSummary = weather.daily.summary;
         this.result.weeklyWeather = weather.daily.data;
         this.result.weeklyWeather.forEach(day => {
+          day.sunriseFullTime = this.localFullTime(
+            day.sunriseTime,
+            weather.timezone
+          );
+          day.sunsetFullTime = this.localFullTime(
+            day.sunsetTime,
+            weather.timezone
+          );
+          day.localDate = this.localDate(day.time, weather.timezone);
           day.localDay = this.localDay(day.time, weather.timezone);
+          day.localDayNb = this.localDayNumber(day.time, weather.timezone);
         });
         this.result.timezone = weather.timezone;
 
         const picture = await getPictures(this.result.city);
         this.result.image = picture.results[0].urls.full;
         this.result.thumb = picture.results[0].urls.thumb;
+        this.result.favourite = {
+          city: this.result.city.toLowerCase(),
+          coordinates: this.result.coordinates,
+          thumb: this.result.thumb
+        };
       } catch (e) {
         console.error(e);
       }
@@ -136,8 +166,18 @@ export default {
       moment.locale(language);
       return moment.tz(day * 1000, timezone).format("ddd");
     },
+    localDayNumber(day, timezone) {
+      return moment.tz(day * 1000, timezone).format("D");
+    },
     localTime(day, timezone) {
       return moment.tz(day * 1000, timezone).format("H") + "h";
+    },
+    localFullTime(day, timezone) {
+      return moment.tz(day * 1000, timezone).format("HH:mm");
+    },
+    showDaily(day) {
+      this.selected = true;
+      this.selectedDay = day;
     }
   }
 };
@@ -145,5 +185,9 @@ export default {
 <style>
 .link {
   text-decoration-line: none;
+}
+.summary {
+  word-break: break-word;
+  font-size: 18px;
 }
 </style>

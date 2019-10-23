@@ -9,12 +9,27 @@
           v-for="(favourite, index) in favourites"
           :key="index"
         >
-          <FavouriteCard :info="favourite" @updated-favourites="update" />
+          <FavouriteCard :favourite="favourite" />
         </v-col>
       </v-row>
       <v-row v-else>
         <v-col cols="12">
-          <FavouriteEmpty />
+          <v-card class="mx-auto" width="90%" height="75vh" elevation="5">
+            <v-container fill-height>
+              <v-row>
+                <v-col
+                  align-self="center"
+                  justify-self="center"
+                  class="text-center"
+                >
+                  <h2 class="mb-8">
+                    Vous n'avez aucune ville sauvegardée !
+                  </h2>
+                  <v-icon x-large color="primary">mdi-heart-broken</v-icon>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-card>
         </v-col>
       </v-row>
     </v-container>
@@ -22,53 +37,19 @@
 </template>
 <script>
 import FavouriteCard from "@/components/FavouriteCard.vue";
-import FavouriteEmpty from "@/components/FavouriteEmpty.vue";
+import { mapState, mapActions } from "vuex";
 
 export default {
   name: "Favourites",
   components: {
-    FavouriteCard,
-    FavouriteEmpty
+    FavouriteCard
   },
-  data() {
-    return {
-      search: "",
-      showSearch: false,
-      favourites: []
-    };
-  },
-  mounted() {
-    this.load();
-  },
-  watch: {
-    favourites: {
-      handler: "saveFavourites",
-      deep: true
-    }
+  computed: mapState(["favourites"]),
+  created() {
+    this.loadFavourites();
   },
   methods: {
-    saveFavourites() {
-      localStorage.setItem("favourites", JSON.stringify(this.favourites));
-    },
-
-    load() {
-      let favourites;
-      const data = localStorage.getItem("favourites");
-
-      if (data != null) {
-        favourites = JSON.parse(data);
-      } else {
-        favourites = [];
-      }
-      return (this.favourites = favourites);
-    },
-    newSearch(city) {
-      this.$router.push({ name: "results", params: { city: city } });
-      this.showSearch = false;
-    },
-    update(favourites) {
-      this.favourites = favourites;
-    }
+    ...mapActions(["loadFavourites"])
   }
 };
 </script>

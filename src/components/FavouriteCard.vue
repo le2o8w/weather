@@ -1,46 +1,41 @@
 <template>
-  <v-card class="my-3 mx-auto" elevation="5" v-if="info" width="250px">
+  <v-card class="my-3 mx-auto" elevation="5" v-if="favourite" width="250px">
     <v-img
-      :src="info.thumb"
-      :alt="info.city"
+      :src="favourite.thumb"
+      :alt="favourite.city"
       class="white--text"
       height="175px"
       gradient="to bottom, rgba(0,0,0,.3), rgba(0,0,0,.6)"
       cover
     >
-      <v-card-title class="d-flex justify-space-between align-center">
-        <a href="#" class="link white--text" @click.prevent="navigate">
-          {{ info.city | capitalizeFirst }}
-        </a>
-        <Favourite :favourite="info" @update="updateFavourites" />
-      </v-card-title>
-      <v-card-text>
-        <div class="d-flex justify-space-between  align-center">
-          <v-lazy min-height="50px" transition="fade-transition">
-            <v-img
-              class="weather__icon"
-              :src="icon"
-              :alt="'Weather icon for' + info.city"
-            ></v-img>
-          </v-lazy>
-          <h5 class="display-1">{{ temperature | round }} °</h5>
-        </div>
-      </v-card-text>
+      <a href="#" class="link white--text" @click.prevent="navigate">
+        <v-card-title class="d-flex justify-space-between align-center">
+          {{ favourite.city | capitalizeFirst }}
+        </v-card-title>
+        <v-card-text>
+          <div class="d-flex justify-space-between  align-center">
+            <v-lazy min-height="50px" transition="fade-transition">
+              <v-img
+                class="weather__icon"
+                :src="icon"
+                :alt="'Weather icon for' + favourite.city"
+              ></v-img>
+            </v-lazy>
+            <h5 class="display-1">{{ temperature | round }} °</h5>
+          </div>
+        </v-card-text>
+      </a>
     </v-img>
   </v-card>
 </template>
 
 <script>
-import Favourite from "@/components/Favourite.vue";
 import { getWeather } from "@/api/weather.js";
-
 export default {
   name: "FavouriteCard",
-  components: {
-    Favourite
-  },
+
   props: {
-    info: {}
+    favourite: {}
   },
   mounted() {
     this.weather();
@@ -53,9 +48,9 @@ export default {
   },
   methods: {
     async weather() {
-      if (this.info) {
+      if (this.favourite) {
         try {
-          const weather = await getWeather(this.info.coordinates);
+          const weather = await getWeather(this.favourite.coordinates);
           this.icon = require(`@/assets/icons/${weather.currently.icon}.png`);
           this.temperature = weather.currently.temperature;
         } catch (error) {
@@ -63,11 +58,11 @@ export default {
         }
       }
     },
-    updateFavourites(favourites) {
-      this.$emit("updated-favourites", favourites);
-    },
     navigate() {
-      this.$router.push({ name: "results", params: { city: this.info.city } });
+      this.$router.push({
+        name: "results",
+        params: { city: this.favourite.city }
+      });
     }
   }
 };

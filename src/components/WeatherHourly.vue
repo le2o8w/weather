@@ -1,8 +1,11 @@
 <template>
   <v-card width="90%" height="100%">
     <v-container>
-      <v-card-title>
-        <h4>Températures heure par heure</h4>
+      <v-card-title class="d-flex align-start flex-column">
+        <div class="font-weight-bold">
+          {{ result.localDay | capitalizeFirst }}
+        </div>
+        <div class="summary">{{ result.hourlyWeatherSummary }}</div>
       </v-card-title>
       <v-container>
         <div class="d-flex justify-space-between align-stretch">
@@ -20,7 +23,7 @@
               height="100%"
               :smooth="16"
               :key="String(result.hourlyTemperatures)"
-              :gradient="['#f72047', '#ffd200', '#1feaea']"
+              :gradient="['#E7FB5F', '#86DFE7', '#522ea8']"
               :line-width="1"
               :value="result.hourlyTemperatures"
               :labels="result.hourlyLabels"
@@ -58,5 +61,9 @@ export default {
 <style scoped>
 .weather__icon {
   width: 50px;
+}
+.summary {
+  word-break: break-word;
+  font-size: 18px;
 }
 </style>
