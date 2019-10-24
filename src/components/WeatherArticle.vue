@@ -1,12 +1,12 @@
 <template>
-  <v-card class="weather" width="90%" elevation="5" v-if="result">
-    <v-lazy height="100%" max-height="calc(100vh - 150px)">
+  <v-card class="my-4" elevation="5" width="100%" v-if="result">
+    <v-lazy height="100%" max-height="calc(100vh - 50px)">
       <v-img
         :src="result.image"
         :alt="result.city"
         class="white--text"
         height="100%"
-        max-height="calc(100vh - 150px)"
+        max-height="calc(100vh - 50px)"
         transition="fade-transition"
         gradient="to bottom, rgba(0,0,0,.3), rgba(0,0,0,.6)"
         cover
@@ -18,6 +18,7 @@
                 v-for="(details, index) in result.country"
                 :key="index"
                 :class="'mb-1 size-' + (index + 1)"
+                class="break-word"
               >
                 {{ details }}
               </span>
@@ -29,10 +30,10 @@
           <v-container>
             <v-row>
               <v-col cols="12" sm="6">
-                <h3 class="my-3">
+                <h3 class="my-3 size-2">
                   {{ result.localDay | capitalizeFirst }}
                 </h3>
-                <p class="">
+                <p class="size-3">
                   {{ result.summary | capitalizeFirst }}
                 </p>
                 <p class="weather__short">
@@ -42,11 +43,11 @@
                       :src="result.currentWeatherIcon"
                     ></v-img>
                   </v-lazy>
-                  <span class="">
+                  <span class="weather__temperature">
                     {{ result.currentWeather.temperature | round }}°C
                   </span>
                 </p>
-                <div class="weather__details">
+                <div class="weather__details size-3">
                   <p>
                     Précipitations :
                     <span>
@@ -92,11 +93,15 @@ export default {
 };
 </script>
 <style>
+.size-4,
 .size-3,
 .size-2,
 .size-1 {
   font-weight: 400;
   display: block;
+}
+.size-4 {
+  font-size: 18px;
 }
 .size-3 {
   font-size: 16px;
@@ -107,15 +112,16 @@ export default {
 .size-1 {
   font-size: 30px;
 }
-.weather {
-  margin: 30px auto;
-}
+
 .weather__short,
 .weather__details p {
   display: flex;
   justify-content: space-between;
   align-items: center;
   max-width: 75%;
+}
+.weather__temperature {
+  font-size: 24px;
 }
 .weather__icon {
   width: 50px;

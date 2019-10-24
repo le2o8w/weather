@@ -1,11 +1,13 @@
 <template>
-  <v-card width="90%" height="100%">
+  <v-card width="100%" height="100%">
     <v-container>
       <v-card-title class="d-flex align-start flex-column">
         <div class="font-weight-bold">
           {{ result.localDay | capitalizeFirst }}
         </div>
-        <div class="summary">{{ result.hourlyWeatherSummary }}</div>
+        <div class="break-word sous-titre font-weight-thin">
+          {{ result.hourlyWeatherSummary }}
+        </div>
       </v-card-title>
       <v-container>
         <div class="d-flex justify-space-between align-stretch">
@@ -61,9 +63,5 @@ export default {
 <style scoped>
 .weather__icon {
   width: 50px;
-}
-.summary {
-  word-break: break-word;
-  font-size: 18px;
 }
 </style>

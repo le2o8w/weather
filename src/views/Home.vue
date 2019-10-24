@@ -18,7 +18,7 @@
               class="mx-auto"
               contain
             ></v-img>
-            <h1 class="mt-4 mb-12 title primary--text">
+            <h1 class="mt-4 mb-12 sous-titre primary--text">
               Prévisions météo du monde entier
             </h1>
 
@@ -35,14 +35,17 @@
             ></v-text-field>
             <p class="primary--text font-weight-bold">ou</p>
             <v-btn
-              class="subtitle-1 pb-2 text-capitalize"
+              class="subtitle-1 text-capitalize"
               large
               color="#85c6b4"
               elevation="1"
               @click="locateMe"
               :loading="gettingLocation"
             >
-              Géolocalisation <v-icon right>mdi-crosshairs-gps</v-icon>
+              <div class="d-flex justify-space-around align-center">
+                <span class="px-1">Géolocalisation</span>
+                <v-icon small class="px-1">mdi-crosshairs-gps</v-icon>
+              </div>
             </v-btn>
 
             <div class="py-5" v-if="error">
@@ -114,9 +117,6 @@ export default {
 };
 </script>
 <style scoped>
-html {
-  overflow-y: scroll;
-}
 .welcome {
   background: 50% url("../../public/img/background/landscape.jpg")
     rgba(0, 0, 0, 0) no-repeat !important;

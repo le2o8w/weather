@@ -1,33 +1,36 @@
 <template>
   <v-content>
     <v-container class="fill-height" fluid v-if="pending">
-      <Loader />
+      <Loader transition="fade-transition" />
     </v-container>
     <v-container class="fill-height d-flex flex-column" fluid v-else>
-      <WeatherArticle :result="result" />
+      <WeatherArticle :result="result" transition="fade-transition" />
       <WeatherHourly class="d-none d-sm-flex" :result="result" />
-      <v-card class="my-8 mx-auto" width="90%">
+      <v-card class="my-4 mx-auto" transition="fade-transition">
         <v-container>
           <v-card-title class="d-flex align-start flex-column">
             <div class="font-weight-bold">Cette semaine</div>
-            <div class="summary">{{ result.weeklyWeatherSummary }}</div>
+            <span class="break-word sous-titre font-weight-thin">
+              {{ result.weeklyWeatherSummary }}
+            </span>
           </v-card-title>
           <v-sheet>
-            <v-slide-group show-arrows>
+            <v-slide-group show-arrows class="slider">
               <v-slide-item
                 v-for="(day, index) in result.weeklyWeather"
                 :key="index"
               >
-                <div @click="showDaily(day)">
-                  <WeatherDaily :result="day" />
+                <div
+                  @click="showDaily(day, index)"
+                  :class="{ active: activeIndex === index }"
+                >
+                  <WeatherDaily :result="day" transition="fade-transition" />
                 </div>
               </v-slide-item>
             </v-slide-group>
-            <v-expand-transition>
-              <v-sheet v-if="selected" tile class="mx-auto" width="90%">
-                <WeatherDailyMore :day="selectedDay" />
-              </v-sheet>
-            </v-expand-transition>
+            <v-sheet v-if="selectedDay" tile class="mx-auto pb-2" width="90%">
+              <WeatherDailyMore :day="selectedDay" />
+            </v-sheet>
           </v-sheet>
         </v-container>
       </v-card>
@@ -57,7 +60,8 @@ export default {
   },
   data() {
     return {
-      selected: false,
+      activeIndex: 0,
+      selected: true,
       selectedDay: null,
       pending: true,
       result: {}
@@ -139,6 +143,7 @@ export default {
           coordinates: this.result.coordinates,
           thumb: this.result.thumb
         };
+        this.selectedDay = this.result.weeklyWeather[0];
       } catch (e) {
         console.error(e);
       }
@@ -175,9 +180,10 @@ export default {
     localFullTime(day, timezone) {
       return moment.tz(day * 1000, timezone).format("HH:mm");
     },
-    showDaily(day) {
+    showDaily(day, index) {
       this.selected = true;
       this.selectedDay = day;
+      this.activeIndex = index;
     }
   }
 };
@@ -186,8 +192,14 @@ export default {
 .link {
   text-decoration-line: none;
 }
-.summary {
+.break-word {
   word-break: break-word;
+}
+.sous-titre {
   font-size: 18px;
+}
+.slider .v-slide-group__prev,
+.slider .v-slide-group__next {
+  min-width: 35px;
 }
 </style>

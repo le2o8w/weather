@@ -1,5 +1,5 @@
 <template>
-  <v-card v-if="result" class="daily my-5 mx-3 pa-3" elevation="5">
+  <v-card v-if="result" class="daily my-5 mx-3 pa-3">
     <v-card-text class=" d-flex flex-column align-center justif-center">
       <h3 class="size-3">{{ result.localDayNb }}</h3>
       <h3 class="mb-1 size-3">{{ result.localDay }}</h3>
@@ -28,7 +28,10 @@ export default {
   }
 };
 </script>
-<style scoped>
+<style>
+.active .daily:after {
+  border: 4px solid #85c6b4;
+}
 .daily:after {
   content: "";
   position: absolute;
@@ -40,7 +43,7 @@ export default {
     rgba(255, 255, 255, 0),
     rgba(255, 255, 255, 0.25)
   );
-  filter: blur(1px);
+  border-radius: 4px;
 }
 
 .daily:active:before {

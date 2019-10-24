@@ -121,4 +121,10 @@ export default {
 header {
   max-height: 48px;
 }
+
+@media screen and (max-width: 600px) {
+  .container {
+    padding: 5px !important;
+  }
+}
 </style>

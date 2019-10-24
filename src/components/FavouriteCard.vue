@@ -6,6 +6,7 @@
       class="white--text"
       height="175px"
       gradient="to bottom, rgba(0,0,0,.3), rgba(0,0,0,.6)"
+      transition="fade-transition"
       cover
     >
       <a href="#" class="link white--text" @click.prevent="navigate">
@@ -21,7 +22,9 @@
                 :alt="'Weather icon for' + favourite.city"
               ></v-img>
             </v-lazy>
-            <h5 class="display-1">{{ temperature | round }} °</h5>
+            <h5 v-if="temperature" class="display-1">
+              {{ temperature | round }} °
+            </h5>
           </div>
         </v-card-text>
       </a>
